@@ -186,54 +186,54 @@ export default function RecipeDialog({ meal, open, onClose, onUpdateMeal }) {
                         <div className="space-y-6">
                             {/* Quick Stats */}
                             <div className="grid grid-cols-3 gap-3">
-                                <div className="p-3 bg-blue-50 rounded-xl text-center">
-                                    <Clock className="w-4 h-4 text-blue-600 mx-auto mb-1" />
-                                    <p className="text-xs text-stone-500">Prep</p>
-                                    <p className="font-semibold text-blue-700">{recipe.prep_time}</p>
+                                <div className="p-3 bg-teal-600 rounded-xl text-center text-white font-bold">
+                                    <Clock className="w-4 h-4 text-white mx-auto mb-1" />
+                                    <p className="text-xs">Prep</p>
+                                    <p className="font-semibold">{recipe.prep_time}</p>
                                 </div>
-                                <div className="p-3 bg-orange-50 rounded-xl text-center">
-                                    <Clock className="w-4 h-4 text-orange-600 mx-auto mb-1" />
-                                    <p className="text-xs text-stone-500">Cook</p>
-                                    <p className="font-semibold text-orange-700">{recipe.cook_time}</p>
+                                <div className="p-3 bg-teal-600 rounded-xl text-center text-white font-bold">
+                                    <Clock className="w-4 h-4 text-white mx-auto mb-1" />
+                                    <p className="text-xs">Cook</p>
+                                    <p className="font-semibold">{recipe.cook_time}</p>
                                 </div>
-                                <div className="p-3 bg-emerald-50 rounded-xl text-center">
-                                    <Users className="w-4 h-4 text-emerald-600 mx-auto mb-1" />
-                                    <p className="text-xs text-stone-500">Servings</p>
-                                    <p className="font-semibold text-emerald-700">{recipe.servings}</p>
+                                <div className="p-3 bg-teal-600 rounded-xl text-center text-white font-bold">
+                                    <Users className="w-4 h-4 text-white mx-auto mb-1" />
+                                    <p className="text-xs">Servings</p>
+                                    <p className="font-semibold">{recipe.servings}</p>
                                 </div>
                             </div>
 
                             {/* Nutrition */}
                             {recipe.nutrition && (
-                                <div className="p-4 bg-purple-50 rounded-xl">
+                                <div className="p-4 bg-teal-600 rounded-xl text-white font-bold">
                                     <h3 className="font-semibold text-stone-800 mb-3 text-sm">Nutrition (per serving)</h3>
                                     <div className="grid grid-cols-5 gap-2 text-center">
                                         <div>
                                             <p className="text-xs text-stone-500">Calories</p>
-                                            <p className="font-bold text-purple-700">{recipe.nutrition.calories}</p>
+                                            <p className="font-bold text-white">{recipe.nutrition.calories}</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-stone-500">Protein</p>
-                                            <p className="font-bold text-purple-700">{recipe.nutrition.protein}g</p>
+                                            <p className="font-bold text-white">{recipe.nutrition.protein}g</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-stone-500">Carbs</p>
-                                            <p className="font-bold text-purple-700">{recipe.nutrition.carbs}g</p>
+                                            <p className="font-bold text-white">{recipe.nutrition.carbs}g</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-stone-500">Fats</p>
-                                            <p className="font-bold text-purple-700">{recipe.nutrition.fats}g</p>
+                                            <p className="font-bold text-white">{recipe.nutrition.fats}g</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-stone-500">Fiber</p>
-                                            <p className="font-bold text-purple-700">{recipe.nutrition.fiber || 0}g</p>
+                                            <p className="font-bold text-white">{recipe.nutrition.fiber || 0}g</p>
                                         </div>
                                     </div>
                                 </div>
                             )}
 
                             {/* Ingredients */}
-                            <div>
+                            <div className="p-3 bg-teal-600 rounded-xl text-white font-bold">
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="font-semibold text-stone-800">Ingredients</h3>
                                     {missingCount > 0 && (
@@ -263,8 +263,8 @@ export default function RecipeDialog({ meal, open, onClose, onUpdateMeal }) {
                                         <div
                                             key={idx}
                                             className={cn(
-                                                "flex items-center justify-between p-3 rounded-lg",
-                                                ing.in_pantry ? "bg-emerald-50" : "bg-amber-50"
+                                                "flex items-center justify-between p-3 rounded-lg text-white",
+                                                ing.in_pantry ? "bg-teal-600" : "bg-teal-800"
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
@@ -289,10 +289,10 @@ export default function RecipeDialog({ meal, open, onClose, onUpdateMeal }) {
                                 <div className="space-y-3">
                                     {recipe.instructions?.map((step, idx) => (
                                         <div key={idx} className="flex gap-3">
-                                            <div className="w-6 h-6 rounded-full bg-stone-100 flex items-center justify-center flex-shrink-0">
-                                                <span className="text-xs font-bold text-stone-600">{idx + 1}</span>
+                                            <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0">
+                                                <span className="text-xs font-bold text-white">{idx + 1}</span>
                                             </div>
-                                            <p className="text-sm text-stone-600 leading-relaxed">{step}</p>
+                                            <p className="text-sm text-white leading-relaxed">{step}</p>
                                         </div>
                                     ))}
                                 </div>

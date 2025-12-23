@@ -24,7 +24,7 @@ export default function Settings() {
     });
 
     const [settings, setSettings] = useState({
-        household_size: 1,
+        household_size: 2,
         monthly_budget: 6000,
         breakfast_time: '07:00',
         lunch_time: '13:00',
@@ -472,7 +472,7 @@ export default function Settings() {
                             "w-full h-14 text-lg font-semibold rounded-2xl transition-all duration-300",
                             saved
                                 ? "bg-emerald-500 hover:bg-emerald-500"
-                                : "bg-stone-800 hover:bg-stone-900"
+                                : "bg-teal-600 hover:bg-teal-700"
                         )}
                     >
                         {saved ? (

@@ -92,20 +92,20 @@ export default function MealSwapSuggestion({ meal, pantryItems, onSwap, settings
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="p-3 bg-white rounded-lg border border-purple-200"
+                            className="p-3 bg-teal-600 rounded-lg border border-teal-200 text-white"
                         >
                             <div className="flex items-start justify-between mb-2">
                                 <div className="flex-1">
-                                    <h4 className="font-medium text-stone-800 text-sm">{sug.name}</h4>
-                                    <p className="text-xs text-stone-500 mt-1">{sug.reason}</p>
+                                    <h4 className="font-medium text-white text-sm">{sug.name}</h4>
+                                    <p className="text-xs text-white mt-1">{sug.reason}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 mb-2">
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs bg-teal-500 text-white">
                                     <DollarSign className="w-3 h-3 mr-1" />
                                     KES {sug.estimated_cost}
                                 </Badge>
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs bg-teal-500 text-white">
                                     <Package className="w-3 h-3 mr-1" />
                                     {sug.pantry_usage_score}% pantry
                                 </Badge>
@@ -113,7 +113,7 @@ export default function MealSwapSuggestion({ meal, pantryItems, onSwap, settings
                             <Button
                                 onClick={() => handleSwap(sug)}
                                 size="sm"
-                                className="w-full bg-purple-600 hover:bg-purple-700"
+                                className="w-full bg-teal-600 hover:bg-teal-700"
                             >
                                 <ArrowRight className="w-4 h-4 mr-1" />
                                 Swap to This

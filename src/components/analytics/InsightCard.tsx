@@ -7,27 +7,27 @@ export default function InsightCard({ type, message, delay = 0 }) {
     const configs = {
         tip: {
             icon: Lightbulb,
-            bg: 'bg-amber-50',
-            border: 'border-amber-200',
-            iconBg: 'bg-amber-100 text-amber-600'
+            bg: 'bg-teal-600',
+            border: 'border-teal-200',
+            iconBg: 'bg-teal-100 text-teal-600'
         },
         saving: {
             icon: TrendingDown,
-            bg: 'bg-emerald-50',
-            border: 'border-emerald-200',
-            iconBg: 'bg-emerald-100 text-emerald-600'
+            bg: 'bg-teal-600',
+            border: 'border-teal-200',
+            iconBg: 'bg-teal-100 text-teal-600'
         },
         warning: {
             icon: AlertCircle,
-            bg: 'bg-rose-50',
-            border: 'border-rose-200',
-            iconBg: 'bg-rose-100 text-rose-600'
+            bg: 'bg-teal-600',
+            border: 'border-teal-200',
+            iconBg: 'bg-teal-100 text-teal-600'
         },
         success: {
             icon: ThumbsUp,
-            bg: 'bg-blue-50',
-            border: 'border-blue-200',
-            iconBg: 'bg-blue-100 text-blue-600'
+            bg: 'bg-teal-600',
+            border: 'border-teal-200',
+            iconBg: 'bg-teal-100 text-teal-600'
         }
     };
 
@@ -42,13 +42,14 @@ export default function InsightCard({ type, message, delay = 0 }) {
             className={cn(
                 "flex items-start gap-3 p-4 rounded-2xl border",
                 config.bg,
-                config.border
+                config.border,
+                "text-white font-bold"
             )}
         >
             <div className={cn("p-2 rounded-xl flex-shrink-0", config.iconBg)}>
                 <Icon className="w-4 h-4" />
             </div>
-            <p className="text-sm text-stone-700 leading-relaxed">{message}</p>
+            <p className="text-sm leading-relaxed">{message}</p>
         </motion.div>
     );
 }
