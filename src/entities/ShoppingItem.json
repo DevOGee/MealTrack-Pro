@@ -1,0 +1,46 @@
+{
+    "name": "ShoppingItem",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Item name"
+        },
+        "category": {
+            "type": "string",
+            "enum": [
+                "staples",
+                "proteins",
+                "vegetables",
+                "fruits",
+                "dairy",
+                "misc"
+            ],
+            "description": "Shopping category"
+        },
+        "quantity": {
+            "type": "string",
+            "description": "Quantity needed"
+        },
+        "price": {
+            "type": "number",
+            "description": "Price in KES"
+        },
+        "purchased": {
+            "type": "boolean",
+            "default": false
+        },
+        "month": {
+            "type": "string",
+            "description": "Month for this item (YYYY-MM format)"
+        },
+        "low_stock": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "name",
+        "category"
+    ]
+}

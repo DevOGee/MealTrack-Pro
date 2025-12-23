@@ -1,0 +1,52 @@
+{
+    "name": "PantryItem",
+   Home.tsx "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Item name"
+        },
+        "category": {
+            "type": "string",
+            "enum": [
+                "staples",
+                "proteins",
+                "vegetables",
+                "fruits",
+                "dairy",
+                "spices",
+                "misc"
+            ],
+            "description": "Item category"
+        },
+        "quantity": {
+            "type": "string",
+            "description": "Current quantity in pantry"
+        },
+        "unit": {
+            "type": "string",
+            "description": "Unit of measurement (kg, g, pieces, etc)"
+        },
+        "low_stock_threshold": {
+            "type": "string",
+            "description": "When to alert for low stock"
+        },
+        "expiry_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Expiration date if applicable"
+        },
+        "last_updated": {
+            "type": "string",
+            "format": "date",
+            "description": "Last update date"
+        },
+        "notes": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "name",
+        "category"
+    ]
+}

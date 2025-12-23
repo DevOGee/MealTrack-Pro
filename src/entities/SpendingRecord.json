@@ -1,0 +1,37 @@
+{
+    "name": "SpendingRecord",
+    "type": "object",
+    "properties": {
+        "date": {
+            "type": "string",
+            "format": "date"
+        },
+        "amount": {
+            "type": "number",
+            "description": "Amount spent in KES"
+        },
+        "category": {
+            "type": "string",
+            "enum": [
+                "staples",
+                "proteins",
+                "vegetables",
+                "fruits",
+                "dairy",
+                "misc"
+            ]
+        },
+        "description": {
+            "type": "string"
+        },
+        "month": {
+            "type": "string",
+            "description": "Month (YYYY-MM format)"
+        }
+    },
+    "required": [
+        "date",
+        "amount",
+        "category"
+    ]
+}

@@ -1,0 +1,135 @@
+{
+    "name": "UserSettings",
+    "type": "object",
+    "properties": {
+        "household_size": {
+            "type": "number",
+            "default": 1,
+            "description": "Number of people in household"
+        },
+        "monthly_budget": {
+            "type": "number",
+            "default": 6000,
+            "description": "Monthly food budget in KES"
+        },
+        "breakfast_time": {
+            "type": "string",
+            "default": "07:00"
+        },
+        "lunch_time": {
+            "type": "string",
+            "default": "13:00"
+        },
+        "dinner_time": {
+            "type": "string",
+            "default": "20:00"
+        },
+        "food_preference": {
+            "type": "string",
+            "enum": [
+                "kenyan",
+                "vegetarian",
+                "mixed"
+            ],
+            "default": "kenyan"
+        },
+        "dietary_goals": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "low_carb",
+                    "high_protein",
+                    "low_fat",
+                    "high_fiber",
+                    "balanced",
+                    "keto",
+                    "paleo"
+                ]
+            },
+            "default": [
+                "balanced"
+            ]
+        },
+        "notifications_enabled": {
+            "type": "boolean",
+            "default": true
+        },
+        "budget_allocation": {
+            "type": "object",
+            "properties": {
+                "staples": {
+                    "type": "number",
+                    "default": 2800
+                },
+                "proteins": {
+                    "type": "number",
+                    "default": 1900
+                },
+                "vegetables": {
+                    "type": "number",
+                    "default": 500
+                },
+                "fruits": {
+                    "type": "number",
+                    "default": 500
+                },
+                "misc": {
+                    "type": "number",
+                    "default": 300
+                }
+            }
+        },
+        "nutrition_goals": {
+            "type": "object",
+            "properties": {
+                "daily_calories": {
+                    "type": "number",
+                    "default": 2000
+                },
+                "daily_protein": {
+                    "type": "number",
+                    "default": 60
+                },
+                "daily_carbs": {
+                    "type": "number",
+                    "default": 250
+                },
+                "daily_fats": {
+                    "type": "number",
+                    "default": 70
+                },
+                "daily_fiber": {
+                    "type": "number",
+                    "default": 25
+                }
+            }
+        },
+        "alert_preferences": {
+            "type": "object",
+            "properties": {
+                "expiry_alerts": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "low_stock_alerts": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "budget_alerts": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "meal_prep_reminders": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "expiry_days_before": {
+                    "type": "number",
+                    "default": 3
+                }
+            }
+        }
+    },
+    "required": []
+}

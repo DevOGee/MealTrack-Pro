@@ -1,0 +1,87 @@
+{
+    "name": "Meal",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the meal"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "breakfast",
+                "lunch",
+                "dinner"
+            ],
+            "description": "Type of meal"
+        },
+        "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of the meal"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "done",
+                "skipped"
+            ],
+            "default": "pending"
+        },
+        "cost": {
+            "type": "number",
+            "description": "Cost in KES"
+        },
+        "ingredients": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "prep_notes": {
+            "type": "string",
+            "description": "Preparation notes or reminders"
+        },
+        "recipe": {
+            "type": "string",
+            "description": "Full recipe instructions"
+        },
+        "nutrition": {
+            "type": "object",
+            "properties": {
+                "calories": {
+                    "type": "number"
+                },
+                "protein": {
+                    "type": "number"
+                },
+                "carbs": {
+                    "type": "number"
+                },
+                "fats": {
+                    "type": "number"
+                },
+                "fiber": {
+                    "type": "number"
+                }
+            }
+        }
+    },
+    "required": [
+        "name",
+        "type",
+        "date"
+    ]
+}
