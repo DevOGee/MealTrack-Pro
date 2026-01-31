@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MealTrackPro</string>
+    <string name="title_activity_main">MealTrackPro</string>
+    <string name="package_name">com.mealtrackpro.app</string>
+    <string name="custom_url_scheme">com.mealtrackpro.app</string>
+</resources>
