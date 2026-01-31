@@ -174,13 +174,75 @@ export const base44 = {
                     };
                 }
 
-                return {
-                    days: Array.from({ length: 7 }, (_, i) => ({
-                        breakfast: { name: "Oatmeal with Milk", cost: 60, prep_notes: "Heat milk" },
-                        lunch: { name: "Rice and Beans", cost: 120, prep_notes: "Use leftover beans" },
-                        dinner: { name: "Ugali and Skuma", cost: 80, prep_notes: "Cook fresh" }
-                    }))
+                // Generate varied meals based on period
+                const breakfastOptions = [
+                    { name: "Mandazi and Tea", cost: 50, prep_notes: "Fry mandazi or buy fresh" },
+                    { name: "Oatmeal with Milk", cost: 60, prep_notes: "Cook with honey" },
+                    { name: "Chapati and Eggs", cost: 80, prep_notes: "Scrambled or fried" },
+                    { name: "Uji (Porridge)", cost: 30, prep_notes: "Add sugar and lemon" },
+                    { name: "Toast and Avocado", cost: 70, prep_notes: "Fresh morning meal" },
+                    { name: "Samosa and Tea", cost: 55, prep_notes: "Buy or make ahead" },
+                    { name: "Mahamri and Chai", cost: 45, prep_notes: "Sweet coconut bread" },
+                    { name: "Pancakes", cost: 65, prep_notes: "With honey or jam" },
+                    { name: "Boiled Eggs and Bread", cost: 50, prep_notes: "Quick protein breakfast" },
+                    { name: "Fruit Salad", cost: 60, prep_notes: "Seasonal fruits" }
+                ];
+
+                const lunchOptions = [
+                    { name: "Rice and Beans", cost: 120, prep_notes: "Cook with onions and tomatoes" },
+                    { name: "Pilau with Kachumbari", cost: 150, prep_notes: "Use pilau masala" },
+                    { name: "Chapati and Ndengu", cost: 100, prep_notes: "Green grams stew" },
+                    { name: "Githeri", cost: 90, prep_notes: "Maize and beans mix" },
+                    { name: "Matoke and Beef", cost: 180, prep_notes: "Slow cook the matoke" },
+                    { name: "Mukimo and Stew", cost: 130, prep_notes: "Mashed with greens" },
+                    { name: "Biriani", cost: 200, prep_notes: "Special occasion meal" },
+                    { name: "Fish and Ugali", cost: 170, prep_notes: "Fried tilapia" },
+                    { name: "Spaghetti Bolognese", cost: 140, prep_notes: "With minced meat" },
+                    { name: "Chicken Stew and Rice", cost: 190, prep_notes: "Sunday lunch style" }
+                ];
+
+                const dinnerOptions = [
+                    { name: "Ugali and Sukuma Wiki", cost: 80, prep_notes: "Classic Kenyan dinner" },
+                    { name: "Chapati and Beans", cost: 110, prep_notes: "Filling dinner" },
+                    { name: "Rice and Cabbage", cost: 70, prep_notes: "Budget friendly" },
+                    { name: "Ugali and Omena", cost: 100, prep_notes: "With silver fish" },
+                    { name: "Mashed Potatoes and Greens", cost: 90, prep_notes: "Comfort food" },
+                    { name: "Wali wa Nazi", cost: 130, prep_notes: "Coconut rice with fish" },
+                    { name: "Ugali and Beef Stew", cost: 150, prep_notes: "Hearty dinner" },
+                    { name: "Vegetable Curry and Rice", cost: 100, prep_notes: "Spiced vegetables" },
+                    { name: "Mokimo", cost: 85, prep_notes: "With avocado" },
+                    { name: "Sima and Kunde", cost: 75, prep_notes: "Cowpeas and ugali" }
+                ];
+
+                // Parse the number of days from the prompt
+                let numDays = 7;
+                if (prompt.includes("14 days")) numDays = 14;
+                else if (prompt.includes("30 days") || prompt.includes("entire month") || prompt.includes("full month")) numDays = 30;
+                else if (prompt.includes("week")) numDays = 7;
+
+                const getRandomItem = (arr, usedIndices, prefix) => {
+                    const key = prefix;
+                    if (!usedIndices[key]) usedIndices[key] = [];
+
+                    let availableIndices = arr.map((_, i) => i).filter(i => !usedIndices[key].includes(i));
+                    if (availableIndices.length === 0) {
+                        usedIndices[key] = [];
+                        availableIndices = arr.map((_, i) => i);
+                    }
+
+                    const idx = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+                    usedIndices[key].push(idx);
+                    return { ...arr[idx] };
                 };
+
+                const usedIndices = {};
+                const days = Array.from({ length: numDays }, (_, i) => ({
+                    breakfast: getRandomItem(breakfastOptions, usedIndices, 'breakfast'),
+                    lunch: getRandomItem(lunchOptions, usedIndices, 'lunch'),
+                    dinner: getRandomItem(dinnerOptions, usedIndices, 'dinner')
+                }));
+
+                return { days };
             }
         }
     }

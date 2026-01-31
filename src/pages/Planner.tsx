@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { format, startOfMonth, endOfMonth, addMonths, subMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, addMonths, subMonths, getDaysInMonth } from 'date-fns';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import MonthCalendar from '@/components/planner/MonthCalendar';
 import DayMealCard from '@/components/planner/DayMealCard';
 import RecipeDialog from '@/components/planner/RecipeDialog';
+import AIGenerateModal, { GenerateOptions } from '@/components/planner/AIGenerateModal';
+import BudgetOverviewCard from '@/components/planner/BudgetOverviewCard';
 import { Button } from '@/components/ui/button';
 
 export default function Planner() {
@@ -14,11 +16,13 @@ export default function Planner() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isGenerating, setIsGenerating] = useState(false);
     const [recipeDialogOpen, setRecipeDialogOpen] = useState(false);
+    const [generateModalOpen, setGenerateModalOpen] = useState(false);
     const [selectedMeal, setSelectedMeal] = useState(null);
     const queryClient = useQueryClient();
 
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
+    const daysInCurrentMonth = getDaysInMonth(currentMonth);
 
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ['meals', format(monthStart, 'yyyy-MM')],
@@ -35,7 +39,7 @@ export default function Planner() {
         queryKey: ['settings'],
         queryFn: async () => {
             const list = await base44.entities.UserSettings.list();
-            return list[0] || { food_preference: 'kenyan' };
+            return list[0] || { food_preference: 'kenyan', monthly_budget: 6000 };
         }
     });
 
@@ -103,16 +107,31 @@ export default function Planner() {
         }
     };
 
-    const generateAIMeals = async () => {
+    const generateAIMeals = async (options: GenerateOptions) => {
         setIsGenerating(true);
         try {
             const preference = settings?.food_preference || 'kenyan';
+            const budget = settings?.monthly_budget || 6000;
+
+            // Determine number of days based on period
+            let numDays = 7;
+            let periodText = 'week';
+            if (options.period === '14') {
+                numDays = 14;
+                periodText = '14 days';
+            } else if (options.period === 'month') {
+                numDays = daysInCurrentMonth;
+                periodText = 'entire month';
+            }
+
             const result = await base44.integrations.Core.InvokeLLM({
-                prompt: `Generate a week of meal suggestions for a ${preference} food preference. 
-        Include breakfast, lunch, and dinner for 7 days.
+                prompt: `Generate ${periodText} of meal suggestions for a ${preference} food preference. 
+        Include breakfast, lunch, and dinner for ${numDays} days.
         Each meal should have: name (simple, budget-friendly), cost in KES (realistic Kenyan prices), and optional prep_notes.
         Focus on affordable, nutritious Kenyan meals like ugali, sukuma wiki, beans, chapati, rice, etc.
-        Average costs: Breakfast ~60 KES, Lunch ~120 KES, Dinner ~140 KES.`,
+        Monthly budget is KES ${budget}. Average costs: Breakfast ~60 KES, Lunch ~120 KES, Dinner ~140 KES.
+        ${options.avoidRepeats ? 'Avoid repeating the same meals.' : ''}
+        ${options.budgetAware ? `Stay within the monthly budget of KES ${budget}.` : ''}`,
                 response_json_schema: {
                     type: "object",
                     properties: {
@@ -131,7 +150,7 @@ export default function Planner() {
                 }
             });
 
-            // Create meals for the next 7 days starting from selected date
+            // Create meals starting from selected date
             const mealsToCreate = [];
             result.days?.forEach((day, idx) => {
                 const date = new Date(selectedDate);
@@ -156,6 +175,8 @@ export default function Planner() {
                 await base44.entities.Meal.bulkCreate(mealsToCreate);
                 queryClient.invalidateQueries(['meals']);
             }
+
+            setGenerateModalOpen(false);
         } catch (error) {
             console.error('Failed to generate meals:', error);
         } finally {
@@ -178,18 +199,21 @@ export default function Planner() {
                     <p className="text-sm text-stone-500">Plan your meals ahead</p>
                 </div>
                 <Button
-                    onClick={generateAIMeals}
-                    disabled={isGenerating}
+                    onClick={() => setGenerateModalOpen(true)}
                     className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
                 >
-                    {isGenerating ? (
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    ) : (
-                        <Sparkles className="w-4 h-4 mr-2" />
-                    )}
+                    <Sparkles className="w-4 h-4 mr-2" />
                     AI Generate
                 </Button>
             </motion.div>
+
+            {/* Budget Overview Card */}
+            <BudgetOverviewCard
+                meals={meals}
+                monthlyBudget={settings?.monthly_budget || 6000}
+                currentMonth={currentMonth}
+                selectedDate={selectedDate}
+            />
 
             {/* Month Navigation */}
             <div className="flex items-center justify-between mb-4">
@@ -269,6 +293,16 @@ export default function Planner() {
                     ))}
                 </div>
             </motion.div>
+
+            {/* AI Generate Modal */}
+            <AIGenerateModal
+                open={generateModalOpen}
+                onClose={() => setGenerateModalOpen(false)}
+                onGenerate={generateAIMeals}
+                isGenerating={isGenerating}
+                monthlyBudget={settings?.monthly_budget || 6000}
+                daysInMonth={daysInCurrentMonth}
+            />
 
             {/* Recipe Dialog */}
             {selectedMeal && (
